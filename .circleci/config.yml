@@ -4,6 +4,10 @@ jobs:
   build-main:
     docker:
       - image: circleci/golang:latest
+      - image: circleci/postgres:alpine
+        environment:
+          POSTGRES_USER: root
+          POSTGRES_DB: test
 
     environment:
       TEST_RESULTS: /tmp/test-results # path to where test results will be saved
@@ -22,9 +26,13 @@ jobs:
             - go-mod-v1-{{ checksum "go.sum" }}
 
       - run:
-          name: Get global dependencies
+          name: Formatting, Generate & Lint
           command: |
-            go get golang.org/x/lint/golint
+            go run golang.org/x/lint/golint -set_exit_status ./...
+            go generate ./...
+            go mod tidy
+            go fmt ./...
+            git --no-pager diff && [[ 0 -eq $(git status --porcelain | wc -l) ]]
 
       - run:
           name: Run unit tests
@@ -40,6 +48,9 @@ jobs:
           paths:
             - "/go/pkg/mod"
 
+      - run:
+          name: Wait for db
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
 
       - store_artifacts: # upload test summary for display in Artifacts
           path: /tmp/test-results

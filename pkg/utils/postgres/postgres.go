@@ -9,7 +9,7 @@ import (
 )
 
 func init() {
-	utils.Register("goracle", newUtil())
+	utils.Register("postgres", newUtil())
 }
 
 type util struct {
@@ -26,16 +26,16 @@ func (*util) ConnectionInfo(db *sql.DB) (string, error) {
 	start := time.Now()
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
-	var version, instanceName, hostName string
-	qry := "SELECT VERSION, INSTANCE_NAME, HOST_NAME FROM V$INSTANCE"
-	err := db.QueryRowContext(ctx, qry).Scan(&version, &instanceName, &hostName)
+	var version, database string
+	qry := "SELECT current_version(), database()"
+	err := db.QueryRowContext(ctx, qry).Scan(&version, &database)
 	if err != nil {
 		return "", err
 	}
 	stop := time.Now()
-	return fmt.Sprintf("connected to %s/%s (%s) -- [%s]", hostName, instanceName, version, stop.Sub(start).String()), nil
+	return fmt.Sprintf("connected to %s (%s) -- [%s]", database, version, stop.Sub(start).String()), nil
 }
 
 func (*util) PlaceHolderMarker() string {
-	return ":"
+	return "&"
 }

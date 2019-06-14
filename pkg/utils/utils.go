@@ -11,6 +11,8 @@ type TailUtil interface {
 	// Returns Info about connection
 	// example: connected to HOST/INSTANCE (VERSION) -- [139.584µs]
 	ConnectionInfo(db *sql.DB) (string, error)
+	// Returns the placeholder marker to use - f.e. :
+	PlaceHolderMarker() string
 }
 
 var (
