@@ -4,18 +4,21 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"github.com/gitu/table-tail/pkg/utils"
 	"time"
+
+	"github.com/gitu/table-tail/pkg/utils"
+	_ "github.com/lib/pq"
 )
 
 func init() {
-	utils.Register("postgres", newUtil())
+	utils.Register("postgres", NewPostgresUtil())
 }
 
 type util struct {
 }
 
-func newUtil() utils.TailUtil {
+// Returns new util for a postgres connection
+func NewPostgresUtil() utils.TailUtil {
 	u := util{}
 	return &u
 }

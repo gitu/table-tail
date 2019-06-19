@@ -4,18 +4,21 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"github.com/gitu/table-tail/pkg/utils"
 	"time"
+
+	"github.com/gitu/table-tail/pkg/utils"
+	_ "gopkg.in/goracle.v2"
 )
 
 func init() {
-	utils.Register("goracle", newUtil())
+	utils.Register("goracle", NewOracleUtil())
 }
 
 type util struct {
 }
 
-func newUtil() utils.TailUtil {
+// Returns new util for an oracle connection
+func NewOracleUtil() utils.TailUtil {
 	u := util{}
 	return &u
 }
