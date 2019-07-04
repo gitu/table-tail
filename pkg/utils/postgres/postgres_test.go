@@ -1,4 +1,4 @@
-package oracle
+package postgres
 
 import (
 	"github.com/gitu/table-tail/pkg/utils"

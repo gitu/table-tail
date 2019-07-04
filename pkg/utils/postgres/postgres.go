@@ -1,4 +1,4 @@
-package oracle
+package postgres
 
 import (
 	"context"
