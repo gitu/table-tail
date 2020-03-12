@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/gitu/table-tail/pkg/utils"
+	// driver for postgres
 	_ "github.com/lib/pq"
 )
 
@@ -17,7 +18,7 @@ func init() {
 type util struct {
 }
 
-// Returns new util for a postgres connection
+// NewPostgresUtil returns new util for a postgres connection
 func NewPostgresUtil() utils.TailUtil {
 	u := util{}
 	return &u

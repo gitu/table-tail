@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/gitu/table-tail/pkg/utils"
+	// oracle driver
 	_ "github.com/godror/godror"
 )
 
@@ -17,7 +18,7 @@ func init() {
 type util struct {
 }
 
-// Returns new util for an oracle connection
+// NewOracleUtil returns new util for an oracle connection
 func NewOracleUtil() utils.TailUtil {
 	u := util{}
 	return &u
