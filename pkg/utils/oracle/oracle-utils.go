@@ -7,11 +7,11 @@ import (
 	"time"
 
 	"github.com/gitu/table-tail/pkg/utils"
-	_ "gopkg.in/goracle.v2"
+	_ "github.com/godror/godror"
 )
 
 func init() {
-	utils.Register("goracle", NewOracleUtil())
+	utils.Register("godror", NewOracleUtil())
 }
 
 type util struct {

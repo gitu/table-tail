@@ -18,7 +18,7 @@ func TestConnectionInfo(t *testing.T) {
 	}
 	defer db.Close()
 
-	util, err := utils.Get("goracle")
+	util, err := utils.Get("godror")
 	if err != nil {
 		t.Errorf("error was not expected while getting util: %s", err)
 	}
